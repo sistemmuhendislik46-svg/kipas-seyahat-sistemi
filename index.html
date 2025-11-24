@@ -241,6 +241,14 @@
             width: 100%;
         }
 
+        .btn-secondary {
+            background: var(--gray);
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
         .login-container {
             max-width: 400px;
             margin: 2rem auto;
@@ -387,7 +395,7 @@
             background: white;
             border-radius: 10px;
             width: 90%;
-            max-width: 800px;
+            max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -420,155 +428,41 @@
             padding: 1.5rem;
         }
 
-        /* Seyahat Formu Stilleri */
-        .travel-form-container {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
+        /* Şifre Sıfırlama Adımları */
+        .reset-steps {
+            margin: 1.5rem 0;
         }
 
-        .travel-form-header {
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .travel-form-body {
-            padding: 1.5rem;
-        }
-
-        .form-section {
-            margin-bottom: 20px;
-            page-break-inside: avoid;
-        }
-
-        .section-title {
-            background-color: #eaeaea;
-            padding: 8px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .travel-form-group {
-            margin-bottom: 12px;
+        .reset-step {
             display: flex;
             align-items: flex-start;
-        }
-
-        .travel-form-group label {
-            width: 200px;
-            font-weight: bold;
-            padding-right: 10px;
-        }
-
-        .travel-form-control {
-            flex: 1;
-            border: none;
-            border-bottom: 1px solid #ccc;
-            padding: 4px 0;
-            background-color: transparent;
-        }
-
-        .radio-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .radio-option {
-            display: flex;
-            align-items: center;
-        }
-
-        .radio-option input {
-            margin-right: 5px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .checkbox-option {
-            display: flex;
-            align-items: center;
-        }
-
-        .checkbox-option input {
-            margin-right: 5px;
-        }
-
-        textarea.travel-form-control {
-            border: 1px solid #ccc;
-            padding: 8px;
-            min-height: 60px;
-            resize: vertical;
-        }
-
-        .time-preferences {
-            display: flex;
-            gap: 30px;
-            margin-top: 10px;
-        }
-
-        .time-preference {
-            flex: 1;
-        }
-
-        .time-options {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 5px;
-        }
-
-        .signature-area {
-            margin-top: 30px;
-            padding: 15px;
-            border: 1px dashed #999;
-            text-align: center;
-        }
-
-        .print-button {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .btn-print {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        /* Bilgi Modalı Stilleri */
-        .info-content {
-            line-height: 1.6;
-        }
-        
-        .info-content h3 {
-            color: var(--primary);
-            margin: 1.5rem 0 0.5rem 0;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 0.5rem;
-        }
-        
-        .info-content ul {
-            margin-left: 1.5rem;
             margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
         }
-        
-        .info-content li {
+
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
             margin-bottom: 0.5rem;
+            color: var(--primary);
         }
 
         /* Uçuş Logları */
@@ -658,15 +552,6 @@
                 gap: 1rem;
             }
 
-            .travel-form-group {
-                flex-direction: column;
-            }
-
-            .travel-form-group label {
-                width: 100%;
-                margin-bottom: 5px;
-            }
-
             .flight-log-item {
                 flex-direction: column;
                 align-items: flex-start;
@@ -692,7 +577,6 @@
             <a href="#" id="navTravels"><i class="fas fa-plane"></i> Seyahatlerim</a>
             <a href="#" id="navForm"><i class="fas fa-file-alt"></i> Basılabilir Seyahat Formu</a>
             <a href="#" id="navInfo"><i class="fas fa-question-circle"></i> Yardım</a>
-            <a href="#"><i class="fas fa-cog"></i> Ayarlar</a>
         </nav>
         <div class="user-info">
             <div class="user-avatar">
@@ -823,274 +707,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Seyahat Formu İçeriği -->
-        <div id="formContent" class="hidden">
-            <div class="welcome-section">
-                <h1>Basılabilir Seyahat Formu</h1>
-                <p>Lütfen aşağıdaki formu eksiksiz doldurarak seyahat talebinizi oluşturunuz. Formu yazdırabilir veya PDF olarak kaydedebilirsiniz.</p>
-            </div>
-
-            <!-- Seyahat Formu -->
-            <div class="travel-form-container">
-                <div class="travel-form-header">
-                    KİPAŞ HOLDİNG - SEYAHAT TALEP FORMU
-                </div>
-                <div class="travel-form-body">
-                    <!-- 1. Talep Eden Bilgileri -->
-                    <div class="form-section">
-                        <div class="section-title">1. Talep Eden Bilgileri</div>
-                        
-                        <div class="travel-form-group">
-                            <label for="fullName">Ad Soyad:</label>
-                            <input type="text" id="fullName" class="travel-form-control" value="">
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label for="department">Birim / Departman / Sicil:</label>
-                            <input type="text" id="department" class="travel-form-control" value="">
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label>Unvan:</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="title-board" name="title" value="Yönetim Kurulu">
-                                    <label for="title-board">Yönetim Kurulu</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="title-manager" name="title" value="Müdür">
-                                    <label for="title-manager">Müdür</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="title-chief" name="title" value="Şef">
-                                    <label for="title-chief">Şef</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="title-expert" name="title" value="Uzman">
-                                    <label for="title-expert">Uzman</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label for="phone">Telefon Numarası (Kurumsal):</label>
-                            <input type="tel" id="phone" class="travel-form-control">
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label for="email">Kurumsal E-posta Adresi:</label>
-                            <input type="email" id="email" class="travel-form-control" value="">
-                        </div>
-                    </div>
-                    
-                    <!-- 2. Program Şekli -->
-                    <div class="form-section">
-                        <div class="section-title">2. Program Şekli</div>
-                        
-                        <div class="travel-form-group">
-                            <label></label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="program-meeting" name="program" value="Toplantı">
-                                    <label for="program-meeting">Toplantı</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="program-fair" name="program" value="Fuar">
-                                    <label for="program-fair">Fuar</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="program-customer" name="program" value="Müşteri Görüşmesi">
-                                    <label for="program-customer">Müşteri Görüşmesi</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="program-other" name="program" value="Diğer">
-                                    <label for="program-other">Başka (açıklama yazınız):</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label></label>
-                            <input type="text" id="other-program" class="travel-form-control" placeholder="Açıklama" style="display: none;">
-                        </div>
-                    </div>
-                    
-                    <!-- 3. Seyahat Tarihleri -->
-                    <div class="form-section">
-                        <div class="section-title">3. Seyahat Tarihleri</div>
-                        
-                        <div class="travel-form-group">
-                            <label for="departure-date">Gidiş Tarihi:</label>
-                            <input type="date" id="departure-date" class="travel-form-control">
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label for="return-date">Dönüş Tarihi:</label>
-                            <input type="date" id="return-date" class="travel-form-control">
-                        </div>
-                    </div>
-                    
-                    <!-- 4. Seyahat Lokasyonu -->
-                    <div class="form-section">
-                        <div class="section-title">4. Seyahat Lokasyonu</div>
-                        
-                        <div class="travel-form-group">
-                            <label for="city">Şehir (ve Ülke -- yurtdışı ise):</label>
-                            <input type="text" id="city" class="travel-form-control">
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label for="company">Ziyaret Edilecek Firma / Kurum:</label>
-                            <input type="text" id="company" class="travel-form-control">
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label for="contact-person">Görüşülecek Kişi(ler):</label>
-                            <input type="text" id="contact-person" class="travel-form-control">
-                        </div>
-                    </div>
-                    
-                    <!-- 5. Seyahat Gerekçesi -->
-                    <div class="form-section">
-                        <div class="section-title">5. Seyahat Gerekçesi (Detaylı Açıklama)</div>
-                        
-                        <div class="travel-form-group">
-                            <label for="purpose">Ziyaret amacı nedir?</label>
-                            <textarea id="purpose" class="travel-form-control"></textarea>
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label for="activity">Hangi faaliyet/etkinlik kapsamında yapılmaktadır?</label>
-                            <textarea id="activity" class="travel-form-control"></textarea>
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label for="expected-outcomes">Beklenen çıktılar nelerdir?</label>
-                            <textarea id="expected-outcomes" class="travel-form-control"></textarea>
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label></label>
-                            <div><small><em>Lütfen açık ve ölçülebilir bir şekilde ifade ediniz.</em></small></div>
-                        </div>
-                    </div>
-                    
-                    <!-- 6. Ulaşım Tercihi -->
-                    <div class="form-section">
-                        <div class="section-title">6. Ulaşım Tercihi</div>
-                        
-                        <div class="travel-form-group">
-                            <label></label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="transport-plane" name="transport" value="Uçak">
-                                    <label for="transport-plane">Uçak</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="transport-company-car" name="transport" value="Şirket Aracı">
-                                    <label for="transport-company-car">Şirket Aracı</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="transport-rental" name="transport" value="Kiralık Araç">
-                                    <label for="transport-rental">Kiralık Araç</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="transport-other" name="transport" value="Diğer">
-                                    <label for="transport-other">Diğer (Açıklayınız):</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="travel-form-group">
-                            <label></label>
-                            <input type="text" id="other-transport" class="travel-form-control" placeholder="Açıklama" style="display: none;">
-                        </div>
-                        
-                        <!-- Uçak tercihleri -->
-                        <div class="travel-form-group">
-                            <label>Uçak talebi varsa, lütfen tercihinizi belirtiniz:</label>
-                            <div></div>
-                        </div>
-                        
-                        <div class="time-preferences">
-                            <div class="time-preference">
-                                <label>Gidiş Uçuş Saati:</label>
-                                <div class="time-options">
-                                    <div class="radio-option">
-                                        <input type="radio" id="departure-morning" name="departure-time" value="Sabah">
-                                        <label for="departure-morning">Sabah</label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="departure-noon" name="departure-time" value="Öğlen">
-                                        <label for="departure-noon">Öğlen</label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="departure-evening" name="departure-time" value="Akşam">
-                                        <label for="departure-evening">Akşam</label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="time-preference">
-                                <label>Dönüş Uçuş Saati:</label>
-                                <div class="time-options">
-                                    <div class="radio-option">
-                                        <input type="radio" id="return-morning" name="return-time" value="Sabah">
-                                        <label for="return-morning">Sabah</label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="return-noon" name="return-time" value="Öğlen">
-                                        <label for="return-noon">Öğlen</label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="return-evening" name="return-time" value="Akşam">
-                                        <label for="return-evening">Akşam</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 7. Konaklama İhtiyacı -->
-                    <div class="form-section">
-                        <div class="section-title">7. Konaklama İhtiyacı</div>
-                        
-                        <div class="travel-form-group">
-                            <label></label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="accommodation-yes" name="accommodation" value="Evet">
-                                    <label for="accommodation-yes">Evet</label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="accommodation-no" name="accommodation" value="Hayır">
-                                    <label for="accommodation-no">Hayır</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Onay -->
-                    <div class="form-section">
-                        <div class="travel-form-group">
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="confirm-terms">
-                                <label for="confirm-terms">Yukarıdaki maddeleri okudum ve kabul ediyorum.</label>
-                            </div>
-                        </div>
-                        
-                        <div class="signature-area">
-                            Kaşe İmza veya yazılı onay
-                        </div>
-                    </div>
-                    
-                    <div class="print-button">
-                        <button class="btn-print" onclick="window.print()">Formu Yazdır / PDF Oluştur</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Giriş Modalı -->
@@ -1113,12 +729,78 @@
                     <button type="submit" class="btn btn-block">Giriş Yap</button>
                 </form>
                 <div style="margin-top: 1rem; text-align: center;">
-                    <a href="#" style="color: var(--primary);">Şifremi Unuttum</a>
+                    <a href="#" id="forgotPasswordLink" style="color: var(--primary);">Şifremi Unuttum</a>
                 </div>
                 <div style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
                     <p><strong>Demo Giriş Bilgileri:</strong></p>
                     <p>Kullanıcı Adı: <code>demo</code></p>
                     <p>Şifre: <code>demo123</code></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Şifremi Unuttum Modalı -->
+    <div class="modal" id="forgotPasswordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Şifremi Unuttum</h3>
+                <button class="close-btn" id="closeForgotModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="reset-steps">
+                    <div class="reset-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>E-posta Adresinizi Girin</h4>
+                            <p>Kayıtlı e-posta adresinizi aşağıya giriniz.</p>
+                            <form id="emailForm" class="form-group" style="margin-top: 1rem;">
+                                <input type="email" id="resetEmail" class="form-control" placeholder="e-posta@kipas.com" required>
+                                <button type="submit" class="btn btn-block" style="margin-top: 1rem;">Doğrulama Kodu Gönder</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="reset-step" id="verificationStep" style="display: none;">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Doğrulama Kodunu Girin</h4>
+                            <p>E-posta adresinize gönderilen 6 haneli doğrulama kodunu giriniz.</p>
+                            <form id="verificationForm" class="form-group" style="margin-top: 1rem;">
+                                <input type="text" id="verificationCode" class="form-control" placeholder="123456" maxlength="6" required>
+                                <button type="submit" class="btn btn-block" style="margin-top: 1rem;">Kodu Doğrula</button>
+                            </form>
+                            <div style="margin-top: 1rem; text-align: center;">
+                                <a href="#" id="resendCode" style="color: var(--primary); font-size: 0.9rem;">Kodu tekrar gönder</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reset-step" id="newPasswordStep" style="display: none;">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Yeni Şifrenizi Belirleyin</h4>
+                            <p>Yeni şifrenizi en az 8 karakter olacak şekilde belirleyiniz.</p>
+                            <form id="newPasswordForm" class="form-group" style="margin-top: 1rem;">
+                                <div class="form-group">
+                                    <label for="newPassword">Yeni Şifre</label>
+                                    <input type="password" id="newPassword" class="form-control" placeholder="En az 8 karakter" minlength="8" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Şifreyi Tekrar Girin</label>
+                                    <input type="password" id="confirmPassword" class="form-control" placeholder="Şifreyi tekrar girin" required>
+                                </div>
+                                <button type="submit" class="btn btn-block">Şifreyi Değiştir</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
+                    <h4>Yardım Merkezi</h4>
+                    <p>Şifre sıfırlama işleminde sorun yaşıyorsanız:</p>
+                    <p><strong>İnsan Kaynakları:</strong> ik@kipas.com</p>
+                    <p><strong>Telefon:</strong> 0 (212) 123 45 67</p>
                 </div>
             </div>
         </div>
@@ -1235,6 +917,8 @@
         let currentUser = null;
         let travelRequests = [];
         let flightLogs = [];
+        let resetCode = '';
+        let resetEmail = '';
 
         // Sayfa yüklendiğinde çalışacak kodlar
         document.addEventListener('DOMContentLoaded', function() {
@@ -1242,18 +926,21 @@
             const loginModal = document.getElementById('loginModal');
             const infoModal = document.getElementById('infoModal');
             const flightLogModal = document.getElementById('flightLogModal');
+            const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+            
             const loginBtn = document.getElementById('loginBtn');
             const logoutBtn = document.getElementById('logoutBtn');
             const closeModal = document.getElementById('closeModal');
             const closeInfoModal = document.getElementById('closeInfoModal');
             const closeFlightModal = document.getElementById('closeFlightModal');
+            const closeForgotModal = document.getElementById('closeForgotModal');
             const navInfo = document.getElementById('navInfo');
             const addFlightLogBtn = document.getElementById('addFlightLogBtn');
+            const forgotPasswordLink = document.getElementById('forgotPasswordLink');
             
             // İçerik elementleri
             const homeContent = document.getElementById('homeContent');
             const travelsContent = document.getElementById('travelsContent');
-            const formContent = document.getElementById('formContent');
             const navHome = document.getElementById('navHome');
             const navTravels = document.getElementById('navTravels');
             const navForm = document.getElementById('navForm');
@@ -1284,6 +971,17 @@
                 flightLogModal.style.display = 'none';
             });
             
+            forgotPasswordLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginModal.style.display = 'none';
+                forgotPasswordModal.style.display = 'flex';
+                resetForgotPasswordForm();
+            });
+            
+            closeForgotModal.addEventListener('click', function() {
+                forgotPasswordModal.style.display = 'none';
+            });
+            
             // Modal dışına tıklanırsa kapat
             window.addEventListener('click', function(e) {
                 if (e.target === loginModal) {
@@ -1294,6 +992,9 @@
                 }
                 if (e.target === flightLogModal) {
                     flightLogModal.style.display = 'none';
+                }
+                if (e.target === forgotPasswordModal) {
+                    forgotPasswordModal.style.display = 'none';
                 }
             });
             
@@ -1315,8 +1016,6 @@
                     document.getElementById('userName').textContent = currentUser.name;
                     document.getElementById('employeeName').value = currentUser.name;
                     document.getElementById('department').value = currentUser.department;
-                    document.getElementById('email').value = currentUser.email;
-                    document.getElementById('fullName').value = currentUser.name;
                     
                     // Giriş/çıkış butonlarını güncelle
                     loginBtn.style.display = 'none';
@@ -1341,8 +1040,6 @@
                 document.getElementById('userName').textContent = 'Misafir';
                 document.getElementById('employeeName').value = '';
                 document.getElementById('department').value = '';
-                document.getElementById('email').value = '';
-                document.getElementById('fullName').value = '';
                 
                 // Giriş/çıkış butonlarını güncelle
                 loginBtn.style.display = 'block';
@@ -1487,30 +1184,83 @@
                 updateFlightLogsList();
             });
 
+            // Şifre sıfırlama formları
+            document.getElementById('emailForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                resetEmail = document.getElementById('resetEmail').value;
+                
+                // E-posta doğrulama (gerçek uygulamada sunucu tarafı doğrulama gerekir)
+                if (resetEmail === 'demo@kipas.com') {
+                    // Doğrulama kodu oluştur
+                    resetCode = generateVerificationCode();
+                    
+                    // E-posta gönderimini simüle et
+                    showStatusMessage(`Doğrulama kodu ${resetEmail} adresinize gönderildi.`, 'success');
+                    
+                    // Bir sonraki adıma geç
+                    document.getElementById('verificationStep').style.display = 'flex';
+                } else {
+                    showStatusMessage('Bu e-posta adresi ile kayıtlı kullanıcı bulunamadı.', 'error');
+                }
+            });
+
+            document.getElementById('verificationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const enteredCode = document.getElementById('verificationCode').value;
+                
+                if (enteredCode === resetCode) {
+                    // Doğrulama başarılı
+                    showStatusMessage('Doğrulama başarılı! Yeni şifrenizi belirleyin.', 'success');
+                    
+                    // Bir sonraki adıma geç
+                    document.getElementById('newPasswordStep').style.display = 'flex';
+                } else {
+                    showStatusMessage('Doğrulama kodu hatalı! Lütfen tekrar deneyin.', 'error');
+                }
+            });
+
+            document.getElementById('newPasswordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (newPassword !== confirmPassword) {
+                    showStatusMessage('Şifreler eşleşmiyor! Lütfen tekrar deneyin.', 'error');
+                    return;
+                }
+                
+                if (newPassword.length < 8) {
+                    showStatusMessage('Şifre en az 8 karakter olmalıdır!', 'error');
+                    return;
+                }
+                
+                // Şifre değiştirme işlemini simüle et
+                showStatusMessage('Şifreniz başarıyla değiştirildi! Giriş yapabilirsiniz.', 'success');
+                
+                // Modalı kapat
+                setTimeout(() => {
+                    forgotPasswordModal.style.display = 'none';
+                    loginModal.style.display = 'flex';
+                    resetForgotPasswordForm();
+                }, 2000);
+            });
+
+            // Kodu tekrar gönder
+            document.getElementById('resendCode').addEventListener('click', function(e) {
+                e.preventDefault();
+                resetCode = generateVerificationCode();
+                showStatusMessage('Yeni doğrulama kodu gönderildi.', 'success');
+            });
+
             // Tarih alanlarına bugünden önceki tarihleri engelle
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('startDate').setAttribute('min', today);
             document.getElementById('endDate').setAttribute('min', today);
-            document.getElementById('departure-date').setAttribute('min', today);
-            document.getElementById('return-date').setAttribute('min', today);
             document.getElementById('flightDate').setAttribute('min', today);
 
             // Başlangıç tarihi değiştiğinde bitiş tarihinin min değerini güncelle
             document.getElementById('startDate').addEventListener('change', function() {
                 document.getElementById('endDate').setAttribute('min', this.value);
-            });
-            
-            document.getElementById('departure-date').addEventListener('change', function() {
-                document.getElementById('return-date').setAttribute('min', this.value);
-            });
-
-            // Seyahat formu "Diğer" seçenekleri için işlevler
-            document.getElementById('program-other').addEventListener('change', function() {
-                document.getElementById('other-program').style.display = this.checked ? 'block' : 'none';
-            });
-            
-            document.getElementById('transport-other').addEventListener('change', function() {
-                document.getElementById('other-transport').style.display = this.checked ? 'block' : 'none';
             });
 
             // Örnek verileri yükle
@@ -1521,7 +1271,6 @@
         function showHomeContent() {
             document.getElementById('homeContent').classList.remove('hidden');
             document.getElementById('travelsContent').classList.add('hidden');
-            document.getElementById('formContent').classList.add('hidden');
             document.getElementById('navHome').classList.add('active');
             document.getElementById('navTravels').classList.remove('active');
             document.getElementById('navForm').classList.remove('active');
@@ -1530,7 +1279,6 @@
         function showTravelsContent() {
             document.getElementById('homeContent').classList.add('hidden');
             document.getElementById('travelsContent').classList.remove('hidden');
-            document.getElementById('formContent').classList.add('hidden');
             document.getElementById('navHome').classList.remove('active');
             document.getElementById('navTravels').classList.add('active');
             document.getElementById('navForm').classList.remove('active');
@@ -1541,12 +1289,8 @@
         }
         
         function showFormContent() {
-            document.getElementById('homeContent').classList.add('hidden');
-            document.getElementById('travelsContent').classList.add('hidden');
-            document.getElementById('formContent').classList.remove('hidden');
-            document.getElementById('navHome').classList.remove('active');
-            document.getElementById('navTravels').classList.remove('active');
-            document.getElementById('navForm').classList.add('active');
+            // Bu fonksiyon şu an kullanılmıyor
+            showHomeContent();
         }
 
         // Durum mesajı gösterme işlevi
@@ -1561,6 +1305,22 @@
             setTimeout(() => {
                 statusMessage.classList.add('hidden');
             }, 5000);
+        }
+
+        // Şifre sıfırlama formunu sıfırla
+        function resetForgotPasswordForm() {
+            document.getElementById('emailForm').reset();
+            document.getElementById('verificationForm').reset();
+            document.getElementById('newPasswordForm').reset();
+            document.getElementById('verificationStep').style.display = 'none';
+            document.getElementById('newPasswordStep').style.display = 'none';
+            resetCode = '';
+            resetEmail = '';
+        }
+
+        // Doğrulama kodu oluştur
+        function generateVerificationCode() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
         }
 
         // Seyahat listesini güncelle
