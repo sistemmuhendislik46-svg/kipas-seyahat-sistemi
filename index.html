@@ -468,9 +468,18 @@
         .footer-links a {
             color: white;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .phone-number {
+            display: none;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
             color: var(--accent);
         }
 
@@ -808,8 +817,8 @@
                         <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
                             <h4>İletişim</h4>
                             <p>Seyahat ile ilgili sorularınız için:<br>
-                            <strong>İnsan Kaynakları:</strong> ik@kipas.com.tr<br>
-                            <strong>Telefon:</strong> 0 (212) 123 45 67</p>
+                            <strong>İnsan ve Kültür Direktörlüğü:</strong> osiraay@kipas.com.tr<br>
+                            <strong>Telefon:</strong> 0533 792 13 48</p>
                         </div>
                     </div>
                 </div>
@@ -932,8 +941,8 @@
                 <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
                     <h4>Yardım Merkezi</h4>
                     <p>Şifre sıfırlama işleminde sorun yaşıyorsanız:</p>
-                    <p><strong>İnsan Kaynakları:</strong> ik@kipas.com.tr</p>
-                    <p><strong>Telefon:</strong> 0 (212) 123 45 67</p>
+                    <p><strong>İnsan ve Kültür Direktörlüğü:</strong> osiraay@kipas.com.tr</p>
+                    <p><strong>Telefon:</strong> 0533 792 13 48</p>
                 </div>
             </div>
         </div>
@@ -998,7 +1007,7 @@
                         <li>Otel konaklamaları 4 yıldız ve altı olmalıdır.</li>
                         <li>Yemek ve ulaşım giderleri için günlük limit <strong>600 TL</strong>'dir.</li>
                         <li>Şehir içi ulaşım için taksi kullanımı sadece zorunlu durumlarda ve makul mesafelerde kullanılabilir.</li>
-                        <li>Seyahat sonrası fatura ve makbuzlar 10 iş günü içinde İnsan Kaynakları departmanına teslim edilmelidir.</li>
+                        <li>Seyahat sonrası fatura ve makbuzlar 10 iş günü içinde İnsan ve Kültür Direktörlüğü'ne teslim edilmelidir.</li>
                         <li>Acil durumlar dışında hafta sonu seyahatleri onaylanmamaktadır.</li>
                     </ul>
 
@@ -1010,14 +1019,14 @@
                         <li>Konaklama için 4-5 yıldız arası oteller tercih edilmelidir.</li>
                         <li>Yurt dışı seyahatlerde yemek ve ulaşım giderleri için günlük limit <strong>150 USD</strong>'dir.</li>
                         <li>Seyahat sağlık sigortası şirket tarafından karşılanacaktır.</li>
-                        <li>Yurt dışı seyahatlerde döviz ihtiyacı için İnsan Kaynakları departmanına başvurulmalıdır.</li>
+                        <li>Yurt dışı seyahatlerde döviz ihtiyacı için İnsan ve Kültür Direktörlüğü'ne başvurulmalıdır.</li>
                         <li>Seyahat sonrası detaylı bir rapor hazırlanarak üst yöneticiye sunulmalıdır.</li>
                     </ul>
 
                     <h3>Genel Kurallar</h3>
                     <ul>
                         <li>Tüm seyahatler öncelikle doğrudan yönetici onayına tabidir.</li>
-                        <li>Seyahat iptali durumunda en kısa sürede İnsan Kaynakları bilgilendirilmelidir.</li>
+                        <li>Seyahat iptali durumunda en kısa sürede İnsan ve Kültür Direktörlüğü bilgilendirilmelidir.</li>
                         <li>Uçuş ve konaklama değişiklikleri için önceden onay alınmalıdır.</li>
                         <li>Faturaların orijinal olması ve vergi numarasının bulunması gerekmektedir.</li>
                         <li>Harcama limitleri aşıldığında ekstra giderler çalışan tarafından karşılanacaktır.</li>
@@ -1026,8 +1035,8 @@
                     <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
                         <h4>İletişim</h4>
                         <p>Seyahat ile ilgili sorularınız için:<br>
-                        <strong>İnsan Kaynakları:</strong> ik@kipas.com.tr<br>
-                        <strong>Telefon:</strong> 0 (212) 123 45 67</p>
+                        <strong>İnsan ve Kültür Direktörlüğü:</strong> osiraay@kipas.com.tr<br>
+                        <strong>Telefon:</strong> 0533 792 13 48</p>
                     </div>
                 </div>
             </div>
@@ -1036,13 +1045,14 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2023 Kipaş Holding - Tüm hakları saklıdır.</p>
+        <p>© 2025 Kipaş Holding - Tüm hakları saklıdır.</p>
         <div class="footer-links">
+            <a href="#" id="contactLink">İletişim</a>
             <a href="#">Gizlilik Politikası</a>
             <a href="#">Kullanım Koşulları</a>
             <a href="#">İnsan Kaynakları</a>
-            <a href="#">İletişim</a>
         </div>
+        <div class="phone-number" id="phoneNumber">05337921348</div>
     </footer>
 
     <script>
@@ -1070,6 +1080,8 @@
             const navInfo = document.getElementById('navInfo');
             const addFlightLogBtn = document.getElementById('addFlightLogBtn');
             const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+            const contactLink = document.getElementById('contactLink');
+            const phoneNumber = document.getElementById('phoneNumber');
             
             // İçerik elementleri
             const homeContent = document.getElementById('homeContent');
@@ -1078,6 +1090,16 @@
             const navTravels = document.getElementById('navTravels');
             const navForm = document.getElementById('navForm');
             
+            // İletişim linki tıklama
+            contactLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (phoneNumber.style.display === 'block') {
+                    phoneNumber.style.display = 'none';
+                } else {
+                    phoneNumber.style.display = 'block';
+                }
+            });
+
             // E-posta doğrulama işlevi
             function isValidKipasEmail(email) {
                 return /^[a-zA-Z0-9._%+-]+@kipas\.com\.tr$/.test(email);
@@ -1688,13 +1710,13 @@
                     department: 'Finans',
                     travelPurpose: 'musteri_ziyareti',
                     destination: 'İstanbul',
-                    startDate: '2023-11-15',
-                    endDate: '2023-11-17',
+                    startDate: '2025-11-15',
+                    endDate: '2025-11-17',
                     estimatedCost: '2450',
                     managerEmail: 'yonetici@kipas.com.tr',
                     notes: 'Müşteri toplantısı için seyahat',
                     status: 'approved',
-                    createdAt: '2023-11-10T10:00:00Z'
+                    createdAt: '2025-11-10T10:00:00Z'
                 },
                 {
                     id: 2,
@@ -1702,13 +1724,13 @@
                     department: 'Finans',
                     travelPurpose: 'proje_toplantisi',
                     destination: 'Ankara',
-                    startDate: '2023-12-05',
-                    endDate: '2023-12-07',
+                    startDate: '2025-12-05',
+                    endDate: '2025-12-07',
                     estimatedCost: '1850',
                     managerEmail: 'yonetici@kipas.com.tr',
                     notes: 'Proje değerlendirme toplantısı',
                     status: 'pending',
-                    createdAt: '2023-11-25T14:30:00Z'
+                    createdAt: '2025-11-25T14:30:00Z'
                 }
             ];
 
@@ -1719,22 +1741,22 @@
                     flightNumber: 'TK1234',
                     flightFrom: 'İstanbul (IST)',
                     flightTo: 'Ankara (ESB)',
-                    flightDate: '2023-11-15',
+                    flightDate: '2025-11-15',
                     flightTime: '08:00',
                     flightDuration: '60',
                     flightNotes: 'Müşteri toplantısı için',
-                    createdAt: '2023-11-15T08:00:00Z'
+                    createdAt: '2025-11-15T08:00:00Z'
                 },
                 {
                     id: 2,
                     flightNumber: 'TK5678',
                     flightFrom: 'Ankara (ESB)',
                     flightTo: 'İstanbul (IST)',
-                    flightDate: '2023-11-17',
+                    flightDate: '2025-11-17',
                     flightTime: '18:00',
                     flightDuration: '60',
                     flightNotes: 'Dönüş uçuşu',
-                    createdAt: '2023-11-17T18:00:00Z'
+                    createdAt: '2025-11-17T18:00:00Z'
                 }
             ];
         }
