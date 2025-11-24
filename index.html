@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -120,6 +119,22 @@
 
         .login-btn:hover {
             background: #c19d2e;
+        }
+
+        .logout-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: none;
+        }
+
+        .logout-btn:hover {
+            background: #bd2130;
         }
 
         /* Main Content */
@@ -348,6 +363,12 @@
             border: 1px solid #c3e6cb;
         }
 
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
         /* Modal */
         .modal {
             display: none;
@@ -550,6 +571,67 @@
             margin-bottom: 0.5rem;
         }
 
+        /* Uçuş Logları */
+        .flight-logs-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .flight-logs-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .flight-logs-body {
+            padding: 1.5rem;
+        }
+
+        .flight-log-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .flight-log-item:last-child {
+            border-bottom: none;
+        }
+
+        .flight-info {
+            flex: 1;
+        }
+
+        .flight-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .flight-details {
+            display: flex;
+            gap: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .flight-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             header {
@@ -584,6 +666,17 @@
                 width: 100%;
                 margin-bottom: 5px;
             }
+
+            .flight-log-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .flight-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
         }
     </style>
 </head>
@@ -605,8 +698,9 @@
             <div class="user-avatar">
                 <i class="fas fa-user"></i>
             </div>
-            <span id="userName">Melih Hüsnü Öksüz</span>
+            <span id="userName">Misafir</span>
             <button class="login-btn" id="loginBtn">Giriş Yap</button>
+            <button class="logout-btn" id="logoutBtn">Çıkış Yap</button>
         </div>
     </header>
 
@@ -620,6 +714,9 @@
                 <p>Kipaş Holding çalışanları için seyahat talep ve onay sistemine hoş geldiniz. Aşağıdaki formu doldurarak seyahat talebinizi oluşturabilir ve üst yöneticinize gönderebilirsiniz.</p>
             </section>
 
+            <!-- Status Message (Initially Hidden) -->
+            <div id="statusMessage" class="status-message hidden"></div>
+
             <!-- Cards Container -->
             <div class="cards-container">
                 <!-- Seyahat Formu -->
@@ -631,11 +728,11 @@
                         <form id="travelForm">
                             <div class="form-group">
                                 <label for="employeeName">Ad Soyad</label>
-                                <input type="text" id="employeeName" class="form-control" value="Melih Hüsnü Öksüz" readonly>
+                                <input type="text" id="employeeName" class="form-control" value="" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="department">Departman</label>
-                                <input type="text" id="department" class="form-control" value="Finans" readonly>
+                                <input type="text" id="department" class="form-control" value="" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="travelPurpose">Seyahat Amacı</label>
@@ -702,9 +799,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Status Message (Initially Hidden) -->
-            <div id="statusMessage" class="status-message hidden"></div>
         </div>
 
         <!-- Seyahatlerim İçeriği -->
@@ -714,46 +808,18 @@
                 <p>Geçmiş seyahat taleplerinizin durumunu ve detaylarını buradan görüntüleyebilirsiniz.</p>
             </div>
 
-            <div class="travel-list">
-                <div class="travel-item">
-                    <div class="travel-info">
-                        <h3>İstanbul - Müşteri Ziyareti</h3>
-                        <div class="travel-details">
-                            <span><i class="far fa-calendar"></i> 15-17 Kasım 2023</span>
-                            <span><i class="fas fa-money-bill-wave"></i> 2.450 TL</span>
-                        </div>
-                    </div>
-                    <div class="travel-status status-approved">Onaylandı</div>
+            <div class="travel-list" id="travelList">
+                <!-- Seyahatler buraya JavaScript ile eklenecek -->
+            </div>
+
+            <!-- Uçuş Logları -->
+            <div class="flight-logs-container">
+                <div class="flight-logs-header">
+                    <span><i class="fas fa-list"></i> Uçuş Logları</span>
+                    <button class="btn btn-small" id="addFlightLogBtn">Yeni Uçuş Ekle</button>
                 </div>
-                <div class="travel-item">
-                    <div class="travel-info">
-                        <h3>Ankara - Proje Toplantısı</h3>
-                        <div class="travel-details">
-                            <span><i class="far fa-calendar"></i> 5-7 Aralık 2023</span>
-                            <span><i class="fas fa-money-bill-wave"></i> 1.850 TL</span>
-                        </div>
-                    </div>
-                    <div class="travel-status status-pending">Beklemede</div>
-                </div>
-                <div class="travel-item">
-                    <div class="travel-info">
-                        <h3>İzmir - Eğitim Semineri</h3>
-                        <div class="travel-details">
-                            <span><i class="far fa-calendar"></i> 20-22 Ekim 2023</span>
-                            <span><i class="fas fa-money-bill-wave"></i> 3.200 TL</span>
-                        </div>
-                    </div>
-                    <div class="travel-status status-completed">Tamamlandı</div>
-                </div>
-                <div class="travel-item">
-                    <div class="travel-info">
-                        <h3>Antalya - Konferans</h3>
-                        <div class="travel-details">
-                            <span><i class="far fa-calendar"></i> 10-12 Eylül 2023</span>
-                            <span><i class="fas fa-money-bill-wave"></i> 2.800 TL</span>
-                        </div>
-                    </div>
-                    <div class="travel-status status-rejected">Reddedildi</div>
+                <div class="flight-logs-body" id="flightLogsList">
+                    <!-- Uçuş logları buraya JavaScript ile eklenecek -->
                 </div>
             </div>
         </div>
@@ -777,12 +843,12 @@
                         
                         <div class="travel-form-group">
                             <label for="fullName">Ad Soyad:</label>
-                            <input type="text" id="fullName" class="travel-form-control" value="Melih Hüsnü Öksüz">
+                            <input type="text" id="fullName" class="travel-form-control" value="">
                         </div>
                         
                         <div class="travel-form-group">
                             <label for="department">Birim / Departman / Sicil:</label>
-                            <input type="text" id="department" class="travel-form-control" value="Finans">
+                            <input type="text" id="department" class="travel-form-control" value="">
                         </div>
                         
                         <div class="travel-form-group">
@@ -814,7 +880,7 @@
                         
                         <div class="travel-form-group">
                             <label for="email">Kurumsal E-posta Adresi:</label>
-                            <input type="email" id="email" class="travel-form-control" value="melih.oksz@kipas.com">
+                            <input type="email" id="email" class="travel-form-control" value="">
                         </div>
                     </div>
                     
@@ -1049,6 +1115,54 @@
                 <div style="margin-top: 1rem; text-align: center;">
                     <a href="#" style="color: var(--primary);">Şifremi Unuttum</a>
                 </div>
+                <div style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
+                    <p><strong>Demo Giriş Bilgileri:</strong></p>
+                    <p>Kullanıcı Adı: <code>demo</code></p>
+                    <p>Şifre: <code>demo123</code></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Uçuş Log Ekleme Modalı -->
+    <div class="modal" id="flightLogModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Yeni Uçuş Ekle</h3>
+                <button class="close-btn" id="closeFlightModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="flightLogForm">
+                    <div class="form-group">
+                        <label for="flightNumber">Uçuş Numarası</label>
+                        <input type="text" id="flightNumber" class="form-control" placeholder="TK1234" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="flightFrom">Kalkış Yeri</label>
+                        <input type="text" id="flightFrom" class="form-control" placeholder="İstanbul (IST)" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="flightTo">Varış Yeri</label>
+                        <input type="text" id="flightTo" class="form-control" placeholder="Ankara (ESB)" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="flightDate">Uçuş Tarihi</label>
+                        <input type="date" id="flightDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="flightTime">Uçuş Saati</label>
+                        <input type="time" id="flightTime" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="flightDuration">Uçuş Süresi (dakika)</label>
+                        <input type="number" id="flightDuration" class="form-control" placeholder="60" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="flightNotes">Notlar</label>
+                        <textarea id="flightNotes" class="form-control" rows="3" placeholder="Uçuşla ilgili ek bilgiler..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-block">Uçuşu Kaydet</button>
+                </form>
             </div>
         </div>
     </div>
@@ -1117,15 +1231,24 @@
     </footer>
 
     <script>
+        // Kullanıcı verileri
+        let currentUser = null;
+        let travelRequests = [];
+        let flightLogs = [];
+
         // Sayfa yüklendiğinde çalışacak kodlar
         document.addEventListener('DOMContentLoaded', function() {
             // Modal elementleri
             const loginModal = document.getElementById('loginModal');
             const infoModal = document.getElementById('infoModal');
+            const flightLogModal = document.getElementById('flightLogModal');
             const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
             const closeModal = document.getElementById('closeModal');
             const closeInfoModal = document.getElementById('closeInfoModal');
+            const closeFlightModal = document.getElementById('closeFlightModal');
             const navInfo = document.getElementById('navInfo');
+            const addFlightLogBtn = document.getElementById('addFlightLogBtn');
             
             // İçerik elementleri
             const homeContent = document.getElementById('homeContent');
@@ -1153,6 +1276,14 @@
                 infoModal.style.display = 'none';
             });
             
+            addFlightLogBtn.addEventListener('click', function() {
+                flightLogModal.style.display = 'flex';
+            });
+            
+            closeFlightModal.addEventListener('click', function() {
+                flightLogModal.style.display = 'none';
+            });
+            
             // Modal dışına tıklanırsa kapat
             window.addEventListener('click', function(e) {
                 if (e.target === loginModal) {
@@ -1160,6 +1291,9 @@
                 }
                 if (e.target === infoModal) {
                     infoModal.style.display = 'none';
+                }
+                if (e.target === flightLogModal) {
+                    flightLogModal.style.display = 'none';
                 }
             });
             
@@ -1169,50 +1303,82 @@
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
                 
-                // Basit giriş kontrolü (gerçek uygulamada sunucu tarafı doğrulama gerekir)
-                if (username && password) {
-                    alert(`Hoş geldiniz ${username}! Giriş başarılı.`);
+                // Basit giriş kontrolü
+                if (username === 'demo' && password === 'demo123') {
+                    currentUser = {
+                        name: 'Demo Kullanıcı',
+                        department: 'Finans',
+                        email: 'demo@kipas.com'
+                    };
+                    
+                    // Kullanıcı bilgilerini güncelle
+                    document.getElementById('userName').textContent = currentUser.name;
+                    document.getElementById('employeeName').value = currentUser.name;
+                    document.getElementById('department').value = currentUser.department;
+                    document.getElementById('email').value = currentUser.email;
+                    document.getElementById('fullName').value = currentUser.name;
+                    
+                    // Giriş/çıkış butonlarını güncelle
+                    loginBtn.style.display = 'none';
+                    logoutBtn.style.display = 'block';
+                    
+                    // Modalı kapat
                     loginModal.style.display = 'none';
                     document.getElementById('loginForm').reset();
+                    
+                    // Başarı mesajı göster
+                    showStatusMessage('Giriş başarılı! Hoş geldiniz ' + currentUser.name, 'success');
                 } else {
-                    alert('Lütfen kullanıcı adı ve şifrenizi giriniz.');
+                    showStatusMessage('Kullanıcı adı veya şifre hatalı!', 'error');
                 }
+            });
+            
+            // Çıkış işlemi
+            logoutBtn.addEventListener('click', function() {
+                currentUser = null;
+                
+                // Kullanıcı bilgilerini sıfırla
+                document.getElementById('userName').textContent = 'Misafir';
+                document.getElementById('employeeName').value = '';
+                document.getElementById('department').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('fullName').value = '';
+                
+                // Giriş/çıkış butonlarını güncelle
+                loginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                
+                // Ana sayfaya yönlendir
+                showHomeContent();
+                
+                // Çıkış mesajı göster
+                showStatusMessage('Çıkış yapıldı.', 'success');
             });
             
             // Navigasyon işlevleri
             navHome.addEventListener('click', function(e) {
                 e.preventDefault();
-                homeContent.classList.remove('hidden');
-                travelsContent.classList.add('hidden');
-                formContent.classList.add('hidden');
-                navHome.classList.add('active');
-                navTravels.classList.remove('active');
-                navForm.classList.remove('active');
+                showHomeContent();
             });
             
             navTravels.addEventListener('click', function(e) {
                 e.preventDefault();
-                homeContent.classList.add('hidden');
-                travelsContent.classList.remove('hidden');
-                formContent.classList.add('hidden');
-                navHome.classList.remove('active');
-                navTravels.classList.add('active');
-                navForm.classList.remove('active');
+                showTravelsContent();
             });
             
             navForm.addEventListener('click', function(e) {
                 e.preventDefault();
-                homeContent.classList.add('hidden');
-                travelsContent.classList.add('hidden');
-                formContent.classList.remove('hidden');
-                navHome.classList.remove('active');
-                navTravels.classList.remove('active');
-                navForm.classList.add('active');
+                showFormContent();
             });
             
             // Form gönderme işlemi
             document.getElementById('travelForm').addEventListener('submit', function(e) {
                 e.preventDefault();
+                
+                if (!currentUser) {
+                    showStatusMessage('Seyahat talebi oluşturmak için giriş yapmalısınız.', 'error');
+                    return;
+                }
                 
                 // Form verilerini al
                 const employeeName = document.getElementById('employeeName').value;
@@ -1227,31 +1393,98 @@
                 
                 // Basit validasyon
                 if (!travelPurpose || !destination || !startDate || !endDate || !estimatedCost || !managerEmail) {
-                    alert('Lütfen tüm zorunlu alanları doldurunuz.');
+                    showStatusMessage('Lütfen tüm zorunlu alanları doldurunuz.', 'error');
                     return;
                 }
                 
                 // Başlangıç tarihi bitiş tarihinden önce mi kontrol et
                 if (new Date(startDate) > new Date(endDate)) {
-                    alert('Başlangıç tarihi bitiş tarihinden sonra olamaz.');
+                    showStatusMessage('Başlangıç tarihi bitiş tarihinden sonra olamaz.', 'error');
                     return;
                 }
                 
-                // Form gönderimini simüle et
-                const statusMessage = document.getElementById('statusMessage');
-                statusMessage.textContent = `Seyahat talebiniz ${managerEmail} adresine başarıyla gönderildi. Onay süreci takibiniz için bilgilendirme yapılacaktır.`;
-                statusMessage.className = 'status-message status-success';
-                statusMessage.classList.remove('hidden');
+                // Seyahat talebi oluştur
+                const travelRequest = {
+                    id: Date.now(),
+                    employeeName,
+                    department,
+                    travelPurpose,
+                    destination,
+                    startDate,
+                    endDate,
+                    estimatedCost,
+                    managerEmail,
+                    notes,
+                    status: 'pending',
+                    createdAt: new Date().toISOString()
+                };
+                
+                // Seyahat taleplerine ekle
+                travelRequests.push(travelRequest);
+                
+                // Başarı mesajı göster
+                showStatusMessage(`Seyahat talebiniz ${managerEmail} adresine başarıyla gönderildi. Onay süreci takibiniz için bilgilendirme yapılacaktır.`, 'success');
                 
                 // Formu temizle
                 document.getElementById('travelForm').reset();
                 document.getElementById('employeeName').value = employeeName;
                 document.getElementById('department').value = department;
                 
-                // Mesajı 5 saniye sonra gizle
-                setTimeout(() => {
-                    statusMessage.classList.add('hidden');
-                }, 5000);
+                // Seyahatlerim sayfasını güncelle
+                updateTravelList();
+            });
+
+            // Uçuş log formu işlemi
+            document.getElementById('flightLogForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!currentUser) {
+                    showStatusMessage('Uçuş logu eklemek için giriş yapmalısınız.', 'error');
+                    return;
+                }
+                
+                // Form verilerini al
+                const flightNumber = document.getElementById('flightNumber').value;
+                const flightFrom = document.getElementById('flightFrom').value;
+                const flightTo = document.getElementById('flightTo').value;
+                const flightDate = document.getElementById('flightDate').value;
+                const flightTime = document.getElementById('flightTime').value;
+                const flightDuration = document.getElementById('flightDuration').value;
+                const flightNotes = document.getElementById('flightNotes').value;
+                
+                // Basit validasyon
+                if (!flightNumber || !flightFrom || !flightTo || !flightDate || !flightTime || !flightDuration) {
+                    showStatusMessage('Lütfen tüm zorunlu alanları doldurunuz.', 'error');
+                    return;
+                }
+                
+                // Uçuş logu oluştur
+                const flightLog = {
+                    id: Date.now(),
+                    flightNumber,
+                    flightFrom,
+                    flightTo,
+                    flightDate,
+                    flightTime,
+                    flightDuration,
+                    flightNotes,
+                    createdAt: new Date().toISOString()
+                };
+                
+                // Uçuş loglarına ekle
+                flightLogs.push(flightLog);
+                
+                // Modalı kapat
+                flightLogModal.style.display = 'none';
+                
+                // Başarı mesajı göster
+                showStatusMessage('Uçuş logu başarıyla eklendi.', 'success');
+                
+                // Formu temizle
+                document.getElementById('flightLogForm').reset();
+                
+                // Uçuş loglarını güncelle
+                updateFlightLogsList();
             });
 
             // Tarih alanlarına bugünden önceki tarihleri engelle
@@ -1260,6 +1493,7 @@
             document.getElementById('endDate').setAttribute('min', today);
             document.getElementById('departure-date').setAttribute('min', today);
             document.getElementById('return-date').setAttribute('min', today);
+            document.getElementById('flightDate').setAttribute('min', today);
 
             // Başlangıç tarihi değiştiğinde bitiş tarihinin min değerini güncelle
             document.getElementById('startDate').addEventListener('change', function() {
@@ -1278,7 +1512,240 @@
             document.getElementById('transport-other').addEventListener('change', function() {
                 document.getElementById('other-transport').style.display = this.checked ? 'block' : 'none';
             });
+
+            // Örnek verileri yükle
+            loadSampleData();
         });
+
+        // İçerik gösterme işlevleri
+        function showHomeContent() {
+            document.getElementById('homeContent').classList.remove('hidden');
+            document.getElementById('travelsContent').classList.add('hidden');
+            document.getElementById('formContent').classList.add('hidden');
+            document.getElementById('navHome').classList.add('active');
+            document.getElementById('navTravels').classList.remove('active');
+            document.getElementById('navForm').classList.remove('active');
+        }
+        
+        function showTravelsContent() {
+            document.getElementById('homeContent').classList.add('hidden');
+            document.getElementById('travelsContent').classList.remove('hidden');
+            document.getElementById('formContent').classList.add('hidden');
+            document.getElementById('navHome').classList.remove('active');
+            document.getElementById('navTravels').classList.add('active');
+            document.getElementById('navForm').classList.remove('active');
+            
+            // Seyahat listesini güncelle
+            updateTravelList();
+            updateFlightLogsList();
+        }
+        
+        function showFormContent() {
+            document.getElementById('homeContent').classList.add('hidden');
+            document.getElementById('travelsContent').classList.add('hidden');
+            document.getElementById('formContent').classList.remove('hidden');
+            document.getElementById('navHome').classList.remove('active');
+            document.getElementById('navTravels').classList.remove('active');
+            document.getElementById('navForm').classList.add('active');
+        }
+
+        // Durum mesajı gösterme işlevi
+        function showStatusMessage(message, type) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.textContent = message;
+            statusMessage.className = 'status-message';
+            statusMessage.classList.add(type === 'success' ? 'status-success' : 'status-error');
+            statusMessage.classList.remove('hidden');
+            
+            // Mesajı 5 saniye sonra gizle
+            setTimeout(() => {
+                statusMessage.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Seyahat listesini güncelle
+        function updateTravelList() {
+            const travelList = document.getElementById('travelList');
+            travelList.innerHTML = '';
+            
+            if (travelRequests.length === 0) {
+                travelList.innerHTML = '<div class="travel-item"><div class="travel-info"><p>Henüz seyahat talebiniz bulunmamaktadır.</p></div></div>';
+                return;
+            }
+            
+            travelRequests.forEach(travel => {
+                const travelItem = document.createElement('div');
+                travelItem.className = 'travel-item';
+                
+                const statusClass = `status-${travel.status}`;
+                const statusText = getStatusText(travel.status);
+                
+                travelItem.innerHTML = `
+                    <div class="travel-info">
+                        <h3>${travel.destination} - ${getPurposeText(travel.travelPurpose)}</h3>
+                        <div class="travel-details">
+                            <span><i class="far fa-calendar"></i> ${formatDate(travel.startDate)} - ${formatDate(travel.endDate)}</span>
+                            <span><i class="fas fa-money-bill-wave"></i> ${travel.estimatedCost} TL</span>
+                        </div>
+                    </div>
+                    <div class="travel-status ${statusClass}">${statusText}</div>
+                `;
+                
+                travelList.appendChild(travelItem);
+            });
+        }
+
+        // Uçuş loglarını güncelle
+        function updateFlightLogsList() {
+            const flightLogsList = document.getElementById('flightLogsList');
+            flightLogsList.innerHTML = '';
+            
+            if (flightLogs.length === 0) {
+                flightLogsList.innerHTML = '<div class="flight-log-item"><div class="flight-info"><p>Henüz uçuş kaydınız bulunmamaktadır.</p></div></div>';
+                return;
+            }
+            
+            flightLogs.forEach(flight => {
+                const flightItem = document.createElement('div');
+                flightItem.className = 'flight-log-item';
+                
+                flightItem.innerHTML = `
+                    <div class="flight-info">
+                        <h4>${flight.flightNumber} - ${flight.flightFrom} → ${flight.flightTo}</h4>
+                        <div class="flight-details">
+                            <span><i class="far fa-calendar"></i> ${formatDate(flight.flightDate)}</span>
+                            <span><i class="far fa-clock"></i> ${flight.flightTime}</span>
+                            <span><i class="fas fa-hourglass-half"></i> ${flight.flightDuration} dk</span>
+                        </div>
+                        ${flight.flightNotes ? `<p><small>${flight.flightNotes}</small></p>` : ''}
+                    </div>
+                    <div class="flight-actions">
+                        <button class="btn btn-small" onclick="editFlightLog(${flight.id})">Düzenle</button>
+                        <button class="btn btn-small" style="background: var(--danger);" onclick="deleteFlightLog(${flight.id})">Sil</button>
+                    </div>
+                `;
+                
+                flightLogsList.appendChild(flightItem);
+            });
+        }
+
+        // Uçuş logu düzenle
+        function editFlightLog(id) {
+            const flight = flightLogs.find(f => f.id === id);
+            if (!flight) return;
+            
+            document.getElementById('flightNumber').value = flight.flightNumber;
+            document.getElementById('flightFrom').value = flight.flightFrom;
+            document.getElementById('flightTo').value = flight.flightTo;
+            document.getElementById('flightDate').value = flight.flightDate;
+            document.getElementById('flightTime').value = flight.flightTime;
+            document.getElementById('flightDuration').value = flight.flightDuration;
+            document.getElementById('flightNotes').value = flight.flightNotes;
+            
+            // Mevcut uçuşu sil
+            deleteFlightLog(id, false);
+            
+            // Modalı aç
+            document.getElementById('flightLogModal').style.display = 'flex';
+        }
+
+        // Uçuş logu sil
+        function deleteFlightLog(id, showMessage = true) {
+            flightLogs = flightLogs.filter(f => f.id !== id);
+            updateFlightLogsList();
+            
+            if (showMessage) {
+                showStatusMessage('Uçuş logu silindi.', 'success');
+            }
+        }
+
+        // Yardımcı işlevler
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'Beklemede',
+                'approved': 'Onaylandı',
+                'completed': 'Tamamlandı',
+                'rejected': 'Reddedildi'
+            };
+            return statusMap[status] || status;
+        }
+
+        function getPurposeText(purpose) {
+            const purposeMap = {
+                'musteri_ziyareti': 'Müşteri Ziyareti',
+                'proje_toplantisi': 'Proje Toplantısı',
+                'egitim': 'Eğitim',
+                'konferans': 'Konferans',
+                'diger': 'Diğer'
+            };
+            return purposeMap[purpose] || purpose;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('tr-TR');
+        }
+
+        // Örnek verileri yükle
+        function loadSampleData() {
+            // Örnek seyahat talepleri
+            travelRequests = [
+                {
+                    id: 1,
+                    employeeName: 'Demo Kullanıcı',
+                    department: 'Finans',
+                    travelPurpose: 'musteri_ziyareti',
+                    destination: 'İstanbul',
+                    startDate: '2023-11-15',
+                    endDate: '2023-11-17',
+                    estimatedCost: '2450',
+                    managerEmail: 'yonetici@kipas.com',
+                    notes: 'Müşteri toplantısı için seyahat',
+                    status: 'approved',
+                    createdAt: '2023-11-10T10:00:00Z'
+                },
+                {
+                    id: 2,
+                    employeeName: 'Demo Kullanıcı',
+                    department: 'Finans',
+                    travelPurpose: 'proje_toplantisi',
+                    destination: 'Ankara',
+                    startDate: '2023-12-05',
+                    endDate: '2023-12-07',
+                    estimatedCost: '1850',
+                    managerEmail: 'yonetici@kipas.com',
+                    notes: 'Proje değerlendirme toplantısı',
+                    status: 'pending',
+                    createdAt: '2023-11-25T14:30:00Z'
+                }
+            ];
+
+            // Örnek uçuş logları
+            flightLogs = [
+                {
+                    id: 1,
+                    flightNumber: 'TK1234',
+                    flightFrom: 'İstanbul (IST)',
+                    flightTo: 'Ankara (ESB)',
+                    flightDate: '2023-11-15',
+                    flightTime: '08:00',
+                    flightDuration: '60',
+                    flightNotes: 'Müşteri toplantısı için',
+                    createdAt: '2023-11-15T08:00:00Z'
+                },
+                {
+                    id: 2,
+                    flightNumber: 'TK5678',
+                    flightFrom: 'Ankara (ESB)',
+                    flightTo: 'İstanbul (IST)',
+                    flightDate: '2023-11-17',
+                    flightTime: '18:00',
+                    flightDuration: '60',
+                    flightNotes: 'Dönüş uçuşu',
+                    createdAt: '2023-11-17T18:00:00Z'
+                }
+            ];
+        }
     </script>
 </body>
 </html>
