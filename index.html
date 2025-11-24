@@ -137,6 +137,108 @@
             background: #bd2130;
         }
 
+        /* Notification System */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            max-width: 400px;
+        }
+
+        .notification {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-left: 4px solid var(--success);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notification.hide {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+
+        .notification.error {
+            border-left-color: var(--danger);
+        }
+
+        .notification.warning {
+            border-left-color: #ffc107;
+        }
+
+        .notification.info {
+            border-left-color: var(--primary);
+        }
+
+        .notification-icon {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .notification.success .notification-icon {
+            color: var(--success);
+        }
+
+        .notification.error .notification-icon {
+            color: var(--danger);
+        }
+
+        .notification.warning .notification-icon {
+            color: #ffc107;
+        }
+
+        .notification.info .notification-icon {
+            color: var(--primary);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--dark);
+        }
+
+        .notification-message {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-close:hover {
+            color: var(--dark);
+        }
+
         /* Main Content */
         .container {
             max-width: 1200px;
@@ -217,6 +319,21 @@
         .form-control:focus {
             border-color: var(--accent);
             outline: none;
+        }
+
+        .form-control.error {
+            border-color: var(--danger);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .form-control.error + .error-message {
+            display: block;
         }
 
         .btn {
@@ -562,10 +679,23 @@
                 width: 100%;
                 justify-content: flex-end;
             }
+
+            .notification-container {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+
+            .notification {
+                max-width: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
     <!-- Header -->
     <header>
         <div class="logo-container">
@@ -647,7 +777,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="managerEmail">Üst Yönetici E-posta</label>
-                                <input type="email" id="managerEmail" class="form-control" placeholder="yonetici@kipas.com" required>
+                                <input type="email" id="managerEmail" class="form-control" placeholder="yonetici@kipas.com.tr" required>
+                                <div class="error-message" id="managerEmailError">Lütfen geçerli bir @kipas.com.tr e-posta adresi giriniz</div>
                             </div>
                             <div class="form-group">
                                 <label for="notes">Ek Notlar</label>
@@ -677,7 +808,7 @@
                         <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
                             <h4>İletişim</h4>
                             <p>Seyahat ile ilgili sorularınız için:<br>
-                            <strong>İnsan Kaynakları:</strong> ik@kipas.com<br>
+                            <strong>İnsan Kaynakları:</strong> ik@kipas.com.tr<br>
                             <strong>Telefon:</strong> 0 (212) 123 45 67</p>
                         </div>
                     </div>
@@ -719,8 +850,9 @@
             <div class="modal-body">
                 <form id="loginForm">
                     <div class="form-group">
-                        <label for="username">Kullanıcı Adı</label>
-                        <input type="text" id="username" class="form-control" placeholder="Kullanıcı adınızı girin" required>
+                        <label for="username">Kullanıcı Adı / E-posta</label>
+                        <input type="text" id="username" class="form-control" placeholder="kullanici@kipas.com.tr" required>
+                        <div class="error-message" id="usernameError">Lütfen geçerli bir @kipas.com.tr e-posta adresi giriniz</div>
                     </div>
                     <div class="form-group">
                         <label for="password">Şifre</label>
@@ -733,7 +865,7 @@
                 </div>
                 <div style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
                     <p><strong>Demo Giriş Bilgileri:</strong></p>
-                    <p>Kullanıcı Adı: <code>demo</code></p>
+                    <p>Kullanıcı Adı: <code>demo@kipas.com.tr</code></p>
                     <p>Şifre: <code>demo123</code></p>
                 </div>
             </div>
@@ -753,9 +885,10 @@
                         <div class="step-number">1</div>
                         <div class="step-content">
                             <h4>E-posta Adresinizi Girin</h4>
-                            <p>Kayıtlı e-posta adresinizi aşağıya giriniz.</p>
+                            <p>Kayıtlı @kipas.com.tr e-posta adresinizi aşağıya giriniz.</p>
                             <form id="emailForm" class="form-group" style="margin-top: 1rem;">
-                                <input type="email" id="resetEmail" class="form-control" placeholder="e-posta@kipas.com" required>
+                                <input type="email" id="resetEmail" class="form-control" placeholder="e-posta@kipas.com.tr" required>
+                                <div class="error-message" id="resetEmailError">Lütfen geçerli bir @kipas.com.tr e-posta adresi giriniz</div>
                                 <button type="submit" class="btn btn-block" style="margin-top: 1rem;">Doğrulama Kodu Gönder</button>
                             </form>
                         </div>
@@ -799,7 +932,7 @@
                 <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
                     <h4>Yardım Merkezi</h4>
                     <p>Şifre sıfırlama işleminde sorun yaşıyorsanız:</p>
-                    <p><strong>İnsan Kaynakları:</strong> ik@kipas.com</p>
+                    <p><strong>İnsan Kaynakları:</strong> ik@kipas.com.tr</p>
                     <p><strong>Telefon:</strong> 0 (212) 123 45 67</p>
                 </div>
             </div>
@@ -893,7 +1026,7 @@
                     <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
                         <h4>İletişim</h4>
                         <p>Seyahat ile ilgili sorularınız için:<br>
-                        <strong>İnsan Kaynakları:</strong> ik@kipas.com<br>
+                        <strong>İnsan Kaynakları:</strong> ik@kipas.com.tr<br>
                         <strong>Telefon:</strong> 0 (212) 123 45 67</p>
                     </div>
                 </div>
@@ -945,6 +1078,37 @@
             const navTravels = document.getElementById('navTravels');
             const navForm = document.getElementById('navForm');
             
+            // E-posta doğrulama işlevi
+            function isValidKipasEmail(email) {
+                return /^[a-zA-Z0-9._%+-]+@kipas\.com\.tr$/.test(email);
+            }
+
+            // E-posta doğrulama event listener'ları
+            document.getElementById('username').addEventListener('blur', function() {
+                validateEmailField(this, 'usernameError');
+            });
+
+            document.getElementById('resetEmail').addEventListener('blur', function() {
+                validateEmailField(this, 'resetEmailError');
+            });
+
+            document.getElementById('managerEmail').addEventListener('blur', function() {
+                validateEmailField(this, 'managerEmailError');
+            });
+
+            function validateEmailField(field, errorId) {
+                const errorElement = document.getElementById(errorId);
+                if (field.value && !isValidKipasEmail(field.value)) {
+                    field.classList.add('error');
+                    errorElement.style.display = 'block';
+                    return false;
+                } else {
+                    field.classList.remove('error');
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+
             // Modal açma/kapama işlevleri
             loginBtn.addEventListener('click', function() {
                 loginModal.style.display = 'flex';
@@ -1004,12 +1168,18 @@
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
                 
+                // E-posta doğrulama
+                if (!validateEmailField(document.getElementById('username'), 'usernameError')) {
+                    showNotification('Hata', 'Lütfen geçerli bir @kipas.com.tr e-posta adresi giriniz.', 'error');
+                    return;
+                }
+                
                 // Basit giriş kontrolü
-                if (username === 'demo' && password === 'demo123') {
+                if (username === 'demo@kipas.com.tr' && password === 'demo123') {
                     currentUser = {
                         name: 'Demo Kullanıcı',
                         department: 'Finans',
-                        email: 'demo@kipas.com'
+                        email: 'demo@kipas.com.tr'
                     };
                     
                     // Kullanıcı bilgilerini güncelle
@@ -1025,10 +1195,10 @@
                     loginModal.style.display = 'none';
                     document.getElementById('loginForm').reset();
                     
-                    // Başarı mesajı göster
-                    showStatusMessage('Giriş başarılı! Hoş geldiniz ' + currentUser.name, 'success');
+                    // Başarı bildirimi göster
+                    showNotification('Giriş Başarılı', `Hoş geldiniz ${currentUser.name}!`, 'success');
                 } else {
-                    showStatusMessage('Kullanıcı adı veya şifre hatalı!', 'error');
+                    showNotification('Giriş Hatası', 'Kullanıcı adı veya şifre hatalı!', 'error');
                 }
             });
             
@@ -1048,8 +1218,8 @@
                 // Ana sayfaya yönlendir
                 showHomeContent();
                 
-                // Çıkış mesajı göster
-                showStatusMessage('Çıkış yapıldı.', 'success');
+                // Çıkış bildirimi göster
+                showNotification('Çıkış Yapıldı', 'Başarıyla çıkış yaptınız.', 'info');
             });
             
             // Navigasyon işlevleri
@@ -1073,7 +1243,13 @@
                 e.preventDefault();
                 
                 if (!currentUser) {
-                    showStatusMessage('Seyahat talebi oluşturmak için giriş yapmalısınız.', 'error');
+                    showNotification('Hata', 'Seyahat talebi oluşturmak için giriş yapmalısınız.', 'error');
+                    return;
+                }
+                
+                // E-posta doğrulama
+                if (!validateEmailField(document.getElementById('managerEmail'), 'managerEmailError')) {
+                    showNotification('Hata', 'Lütfen geçerli bir @kipas.com.tr e-posta adresi giriniz.', 'error');
                     return;
                 }
                 
@@ -1090,13 +1266,13 @@
                 
                 // Basit validasyon
                 if (!travelPurpose || !destination || !startDate || !endDate || !estimatedCost || !managerEmail) {
-                    showStatusMessage('Lütfen tüm zorunlu alanları doldurunuz.', 'error');
+                    showNotification('Hata', 'Lütfen tüm zorunlu alanları doldurunuz.', 'error');
                     return;
                 }
                 
                 // Başlangıç tarihi bitiş tarihinden önce mi kontrol et
                 if (new Date(startDate) > new Date(endDate)) {
-                    showStatusMessage('Başlangıç tarihi bitiş tarihinden sonra olamaz.', 'error');
+                    showNotification('Hata', 'Başlangıç tarihi bitiş tarihinden sonra olamaz.', 'error');
                     return;
                 }
                 
@@ -1119,8 +1295,12 @@
                 // Seyahat taleplerine ekle
                 travelRequests.push(travelRequest);
                 
-                // Başarı mesajı göster
-                showStatusMessage(`Seyahat talebiniz ${managerEmail} adresine başarıyla gönderildi. Onay süreci takibiniz için bilgilendirme yapılacaktır.`, 'success');
+                // Başarı bildirimi göster
+                showNotification(
+                    'Seyahat Talebi Gönderildi', 
+                    `Seyahat talebiniz ${managerEmail} adresine başarıyla gönderildi. Onay süreci takibiniz için bilgilendirme yapılacaktır.`,
+                    'success'
+                );
                 
                 // Formu temizle
                 document.getElementById('travelForm').reset();
@@ -1136,7 +1316,7 @@
                 e.preventDefault();
                 
                 if (!currentUser) {
-                    showStatusMessage('Uçuş logu eklemek için giriş yapmalısınız.', 'error');
+                    showNotification('Hata', 'Uçuş logu eklemek için giriş yapmalısınız.', 'error');
                     return;
                 }
                 
@@ -1151,7 +1331,7 @@
                 
                 // Basit validasyon
                 if (!flightNumber || !flightFrom || !flightTo || !flightDate || !flightTime || !flightDuration) {
-                    showStatusMessage('Lütfen tüm zorunlu alanları doldurunuz.', 'error');
+                    showNotification('Hata', 'Lütfen tüm zorunlu alanları doldurunuz.', 'error');
                     return;
                 }
                 
@@ -1174,8 +1354,8 @@
                 // Modalı kapat
                 flightLogModal.style.display = 'none';
                 
-                // Başarı mesajı göster
-                showStatusMessage('Uçuş logu başarıyla eklendi.', 'success');
+                // Başarı bildirimi göster
+                showNotification('Uçuş Logu Eklendi', 'Uçuş logu başarıyla eklendi.', 'success');
                 
                 // Formu temizle
                 document.getElementById('flightLogForm').reset();
@@ -1189,18 +1369,24 @@
                 e.preventDefault();
                 resetEmail = document.getElementById('resetEmail').value;
                 
+                // E-posta doğrulama
+                if (!validateEmailField(document.getElementById('resetEmail'), 'resetEmailError')) {
+                    showNotification('Hata', 'Lütfen geçerli bir @kipas.com.tr e-posta adresi giriniz.', 'error');
+                    return;
+                }
+                
                 // E-posta doğrulama (gerçek uygulamada sunucu tarafı doğrulama gerekir)
-                if (resetEmail === 'demo@kipas.com') {
+                if (resetEmail === 'demo@kipas.com.tr') {
                     // Doğrulama kodu oluştur
                     resetCode = generateVerificationCode();
                     
                     // E-posta gönderimini simüle et
-                    showStatusMessage(`Doğrulama kodu ${resetEmail} adresinize gönderildi.`, 'success');
+                    showNotification('Doğrulama Kodu Gönderildi', `Doğrulama kodu ${resetEmail} adresinize gönderildi.`, 'success');
                     
                     // Bir sonraki adıma geç
                     document.getElementById('verificationStep').style.display = 'flex';
                 } else {
-                    showStatusMessage('Bu e-posta adresi ile kayıtlı kullanıcı bulunamadı.', 'error');
+                    showNotification('Hata', 'Bu e-posta adresi ile kayıtlı kullanıcı bulunamadı.', 'error');
                 }
             });
 
@@ -1210,12 +1396,12 @@
                 
                 if (enteredCode === resetCode) {
                     // Doğrulama başarılı
-                    showStatusMessage('Doğrulama başarılı! Yeni şifrenizi belirleyin.', 'success');
+                    showNotification('Doğrulama Başarılı', 'Doğrulama başarılı! Yeni şifrenizi belirleyin.', 'success');
                     
                     // Bir sonraki adıma geç
                     document.getElementById('newPasswordStep').style.display = 'flex';
                 } else {
-                    showStatusMessage('Doğrulama kodu hatalı! Lütfen tekrar deneyin.', 'error');
+                    showNotification('Hata', 'Doğrulama kodu hatalı! Lütfen tekrar deneyin.', 'error');
                 }
             });
 
@@ -1225,17 +1411,17 @@
                 const confirmPassword = document.getElementById('confirmPassword').value;
                 
                 if (newPassword !== confirmPassword) {
-                    showStatusMessage('Şifreler eşleşmiyor! Lütfen tekrar deneyin.', 'error');
+                    showNotification('Hata', 'Şifreler eşleşmiyor! Lütfen tekrar deneyin.', 'error');
                     return;
                 }
                 
                 if (newPassword.length < 8) {
-                    showStatusMessage('Şifre en az 8 karakter olmalıdır!', 'error');
+                    showNotification('Hata', 'Şifre en az 8 karakter olmalıdır!', 'error');
                     return;
                 }
                 
                 // Şifre değiştirme işlemini simüle et
-                showStatusMessage('Şifreniz başarıyla değiştirildi! Giriş yapabilirsiniz.', 'success');
+                showNotification('Şifre Değiştirildi', 'Şifreniz başarıyla değiştirildi! Giriş yapabilirsiniz.', 'success');
                 
                 // Modalı kapat
                 setTimeout(() => {
@@ -1249,7 +1435,7 @@
             document.getElementById('resendCode').addEventListener('click', function(e) {
                 e.preventDefault();
                 resetCode = generateVerificationCode();
-                showStatusMessage('Yeni doğrulama kodu gönderildi.', 'success');
+                showNotification('Yeni Kod Gönderildi', 'Yeni doğrulama kodu gönderildi.', 'info');
             });
 
             // Tarih alanlarına bugünden önceki tarihleri engelle
@@ -1266,6 +1452,66 @@
             // Örnek verileri yükle
             loadSampleData();
         });
+
+        // Bildirim sistemi
+        function showNotification(title, message, type = 'info') {
+            const notificationContainer = document.getElementById('notificationContainer');
+            const notificationId = 'notification-' + Date.now();
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.id = notificationId;
+            
+            const icons = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="${icons[type]}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+                <button class="notification-close" onclick="closeNotification('${notificationId}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            // Bildirimi göster
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Otomatik kapatma
+            if (type !== 'error') {
+                setTimeout(() => {
+                    closeNotification(notificationId);
+                }, 5000);
+            }
+            
+            return notificationId;
+        }
+
+        function closeNotification(notificationId) {
+            const notification = document.getElementById(notificationId);
+            if (notification) {
+                notification.classList.remove('show');
+                notification.classList.add('hide');
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }
+        }
 
         // İçerik gösterme işlevleri
         function showHomeContent() {
@@ -1291,20 +1537,6 @@
         function showFormContent() {
             // Bu fonksiyon şu an kullanılmıyor
             showHomeContent();
-        }
-
-        // Durum mesajı gösterme işlevi
-        function showStatusMessage(message, type) {
-            const statusMessage = document.getElementById('statusMessage');
-            statusMessage.textContent = message;
-            statusMessage.className = 'status-message';
-            statusMessage.classList.add(type === 'success' ? 'status-success' : 'status-error');
-            statusMessage.classList.remove('hidden');
-            
-            // Mesajı 5 saniye sonra gizle
-            setTimeout(() => {
-                statusMessage.classList.add('hidden');
-            }, 5000);
         }
 
         // Şifre sıfırlama formunu sıfırla
@@ -1415,7 +1647,7 @@
             updateFlightLogsList();
             
             if (showMessage) {
-                showStatusMessage('Uçuş logu silindi.', 'success');
+                showNotification('Uçuş Logu Silindi', 'Uçuş logu başarıyla silindi.', 'info');
             }
         }
 
@@ -1459,7 +1691,7 @@
                     startDate: '2023-11-15',
                     endDate: '2023-11-17',
                     estimatedCost: '2450',
-                    managerEmail: 'yonetici@kipas.com',
+                    managerEmail: 'yonetici@kipas.com.tr',
                     notes: 'Müşteri toplantısı için seyahat',
                     status: 'approved',
                     createdAt: '2023-11-10T10:00:00Z'
@@ -1473,7 +1705,7 @@
                     startDate: '2023-12-05',
                     endDate: '2023-12-07',
                     estimatedCost: '1850',
-                    managerEmail: 'yonetici@kipas.com',
+                    managerEmail: 'yonetici@kipas.com.tr',
                     notes: 'Proje değerlendirme toplantısı',
                     status: 'pending',
                     createdAt: '2023-11-25T14:30:00Z'
