@@ -761,7 +761,10 @@
                                 <label for="travelPurpose">Seyahat Amacı</label>
                                 <select id="travelPurpose" class="form-control" required>
                                     <option value="">Seçiniz</option>
-                                    <option value="musteri_ziyareti">Müşteri Ziyareti</option>
+                                    <option value="mal_satisi">Mal Satışı</option>
+                                    <option value="know_how_transferi">Know-How Transferi</option>
+                                    <option value="musteri_iletisim">Müşteri İletişim Güçlendirme</option>
+                                    <option value="makine_alimi">Makine Alımı / Pazarlık</option>
                                     <option value="proje_toplantisi">Proje Toplantısı</option>
                                     <option value="egitim">Eğitim</option>
                                     <option value="konferans">Konferans</option>
@@ -781,8 +784,22 @@
                                 <input type="date" id="endDate" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="estimatedCost">Tahmini Maliyet (TL)</label>
-                                <input type="number" id="estimatedCost" class="form-control" placeholder="0" min="0" required>
+                                <label for="expectedReturn">Beklenen ve Öngörülen Geri Dönüş</label>
+                                <select id="expectedReturn" class="form-control" required>
+                                    <option value="">Seçiniz</option>
+                                    <option value="mal_satisi_artisi">Mal Satışında Artış</option>
+                                    <option value="know_how_kazanim">Know-How Kazanımı</option>
+                                    <option value="musteri_memnuniyeti">Müşteri Memnuniyeti Artışı</option>
+                                    <option value="maliyet_optimizasyonu">Maliyet Optimizasyonu</option>
+                                    <option value="uretim_verimliligi">Üretim Verimliliği Artışı</option>
+                                    <option value="pazar_payı_buyumesi">Pazar Payı Büyümesi</option>
+                                    <option value="stratejik_isbirligi">Stratejik İşbirliği</option>
+                                    <option value="diger">Diğer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="returnDescription">Geri Dönüş Açıklaması</label>
+                                <textarea id="returnDescription" class="form-control" rows="3" placeholder="Beklenen geri dönüşü detaylandırınız..."></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="managerEmail">Üst Yönetici E-posta</label>
@@ -808,11 +825,12 @@
                     <div class="card-body">
                         <h3>Kipaş Holding Seyahat Kuralları</h3>
                         <ul style="margin-left: 1.5rem; margin-top: 1rem;">
-                            <li>Seyahat talepleri en az 3 iş günü önceden yapılmalıdır.</li>
+                            <li>Seyahat talepleri en az <strong>1 hafta (7 iş günü)</strong> önceden yapılmalıdır.</li>
                             <li>Uçak biletleri ekonomi sınıfından seçilmelidir.</li>
                             <li>Otel konaklamaları 4 yıldız ve altı olmalıdır.</li>
                             <li>Yemek ve ulaşım giderleri için günlük limit <strong>600 TL</strong>'dir.</li>
                             <li>Seyahat sonrası fatura ve makbuzlar 10 iş günü içinde teslim edilmelidir.</li>
+                            <li>Tüm seyahat talepleri <strong>beklenen geri dönüş</strong> açıklaması ile birlikte sunulmalıdır.</li>
                         </ul>
                         <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
                             <h4>İletişim</h4>
@@ -1002,13 +1020,14 @@
                 <div class="info-content">
                     <h3>Yurt İçi Seyahat Kuralları</h3>
                     <ul>
-                        <li>Seyahat talepleri en az 3 iş günü önceden yapılmalıdır.</li>
+                        <li>Seyahat talepleri en az <strong>1 hafta (7 iş günü)</strong> önceden yapılmalıdır.</li>
                         <li>Uçak biletleri ekonomi sınıfından seçilmelidir.</li>
                         <li>Otel konaklamaları 4 yıldız ve altı olmalıdır.</li>
                         <li>Yemek ve ulaşım giderleri için günlük limit <strong>600 TL</strong>'dir.</li>
                         <li>Şehir içi ulaşım için taksi kullanımı sadece zorunlu durumlarda ve makul mesafelerde kullanılabilir.</li>
                         <li>Seyahat sonrası fatura ve makbuzlar 10 iş günü içinde İnsan ve Kültür Direktörlüğü'ne teslim edilmelidir.</li>
                         <li>Acil durumlar dışında hafta sonu seyahatleri onaylanmamaktadır.</li>
+                        <li>Tüm seyahat talepleri <strong>beklenen geri dönüş</strong> açıklaması ile birlikte sunulmalıdır.</li>
                     </ul>
 
                     <h3>Yurt Dışı Seyahat Kuralları</h3>
@@ -1030,6 +1049,7 @@
                         <li>Uçuş ve konaklama değişiklikleri için önceden onay alınmalıdır.</li>
                         <li>Faturaların orijinal olması ve vergi numarasının bulunması gerekmektedir.</li>
                         <li>Harcama limitleri aşıldığında ekstra giderler çalışan tarafından karşılanacaktır.</li>
+                        <li>Seyahat öncesi <strong>beklenen geri dönüş analizi</strong> mutlaka yapılmalıdır.</li>
                     </ul>
 
                     <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
@@ -1282,12 +1302,13 @@
                 const destination = document.getElementById('destination').value;
                 const startDate = document.getElementById('startDate').value;
                 const endDate = document.getElementById('endDate').value;
-                const estimatedCost = document.getElementById('estimatedCost').value;
+                const expectedReturn = document.getElementById('expectedReturn').value;
+                const returnDescription = document.getElementById('returnDescription').value;
                 const managerEmail = document.getElementById('managerEmail').value;
                 const notes = document.getElementById('notes').value;
                 
                 // Basit validasyon
-                if (!travelPurpose || !destination || !startDate || !endDate || !estimatedCost || !managerEmail) {
+                if (!travelPurpose || !destination || !startDate || !endDate || !expectedReturn || !managerEmail) {
                     showNotification('Hata', 'Lütfen tüm zorunlu alanları doldurunuz.', 'error');
                     return;
                 }
@@ -1307,7 +1328,8 @@
                     destination,
                     startDate,
                     endDate,
-                    estimatedCost,
+                    expectedReturn,
+                    returnDescription,
                     managerEmail,
                     notes,
                     status: 'pending',
@@ -1593,14 +1615,17 @@
                 
                 const statusClass = `status-${travel.status}`;
                 const statusText = getStatusText(travel.status);
+                const purposeText = getPurposeText(travel.travelPurpose);
+                const returnText = getReturnText(travel.expectedReturn);
                 
                 travelItem.innerHTML = `
                     <div class="travel-info">
-                        <h3>${travel.destination} - ${getPurposeText(travel.travelPurpose)}</h3>
+                        <h3>${travel.destination} - ${purposeText}</h3>
                         <div class="travel-details">
                             <span><i class="far fa-calendar"></i> ${formatDate(travel.startDate)} - ${formatDate(travel.endDate)}</span>
-                            <span><i class="fas fa-money-bill-wave"></i> ${travel.estimatedCost} TL</span>
+                            <span><i class="fas fa-chart-line"></i> ${returnText}</span>
                         </div>
+                        ${travel.returnDescription ? `<p><small><strong>Geri Dönüş Açıklaması:</strong> ${travel.returnDescription}</small></p>` : ''}
                     </div>
                     <div class="travel-status ${statusClass}">${statusText}</div>
                 `;
@@ -1686,13 +1711,30 @@
 
         function getPurposeText(purpose) {
             const purposeMap = {
-                'musteri_ziyareti': 'Müşteri Ziyareti',
+                'mal_satisi': 'Mal Satışı',
+                'know_how_transferi': 'Know-How Transferi',
+                'musteri_iletisim': 'Müşteri İletişim Güçlendirme',
+                'makine_alimi': 'Makine Alımı / Pazarlık',
                 'proje_toplantisi': 'Proje Toplantısı',
                 'egitim': 'Eğitim',
                 'konferans': 'Konferans',
                 'diger': 'Diğer'
             };
             return purposeMap[purpose] || purpose;
+        }
+
+        function getReturnText(expectedReturn) {
+            const returnMap = {
+                'mal_satisi_artisi': 'Mal Satışında Artış',
+                'know_how_kazanim': 'Know-How Kazanımı',
+                'musteri_memnuniyeti': 'Müşteri Memnuniyeti Artışı',
+                'maliyet_optimizasyonu': 'Maliyet Optimizasyonu',
+                'uretim_verimliligi': 'Üretim Verimliliği Artışı',
+                'pazar_payı_buyumesi': 'Pazar Payı Büyümesi',
+                'stratejik_isbirligi': 'Stratejik İşbirliği',
+                'diger': 'Diğer'
+            };
+            return returnMap[expectedReturn] || expectedReturn;
         }
 
         function formatDate(dateString) {
@@ -1708,13 +1750,14 @@
                     id: 1,
                     employeeName: 'Demo Kullanıcı',
                     department: 'Finans',
-                    travelPurpose: 'musteri_ziyareti',
+                    travelPurpose: 'mal_satisi',
                     destination: 'İstanbul',
                     startDate: '2025-11-15',
                     endDate: '2025-11-17',
-                    estimatedCost: '2450',
+                    expectedReturn: 'mal_satisi_artisi',
+                    returnDescription: 'Yeni müşteri portföyü ile aylık 500.000 TL ek satış bekleniyor',
                     managerEmail: 'yonetici@kipas.com.tr',
-                    notes: 'Müşteri toplantısı için seyahat',
+                    notes: 'Potansiyel müşteri ziyareti',
                     status: 'approved',
                     createdAt: '2025-11-10T10:00:00Z'
                 },
@@ -1722,13 +1765,14 @@
                     id: 2,
                     employeeName: 'Demo Kullanıcı',
                     department: 'Finans',
-                    travelPurpose: 'proje_toplantisi',
+                    travelPurpose: 'know_how_transferi',
                     destination: 'Ankara',
                     startDate: '2025-12-05',
                     endDate: '2025-12-07',
-                    estimatedCost: '1850',
+                    expectedReturn: 'know_how_kazanim',
+                    returnDescription: 'Yeni üretim teknikleri ve proses optimizasyonu bilgisi kazanımı',
                     managerEmail: 'yonetici@kipas.com.tr',
-                    notes: 'Proje değerlendirme toplantısı',
+                    notes: 'Teknoloji transferi toplantısı',
                     status: 'pending',
                     createdAt: '2025-11-25T14:30:00Z'
                 }
